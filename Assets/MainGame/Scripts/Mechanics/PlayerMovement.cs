@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using PathCreation;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private List<Transform> Paths;
-    public float moveSpeed = 5f;    // Speed in units per second
+    public List<PathCreator> Paths;
+    public EndOfPathInstruction endOfPathInstruction;
+    public float LeftRightSpeed = 2f;    
+    public float MaxSpeed = 5f;    
+    public float RotationSpeed = 5f;   
+    private float moveSpeed = 5f; 
+    public float Accel = 5f;   
     private int currentWaypointIndex = 0;
 
     public Transform PlayerRotate;
@@ -14,70 +20,82 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform MaxLeft;
     public Transform MaxRight;
+    public bool reachFinalPos;
     private float currrentLeftRightValue;
+    private float lastLeftRightValue;
     private float lastInputTouchX;
     private float currentInputTouchX;
+    private bool isHoldingInput;
+    float distanceTravelled;
+    private int pathIndex;
+    
     
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60;
+        pathIndex = 0;
+        distanceTravelled = 0;
+        reachFinalPos = false;
+        isHoldingInput = false;
         currrentLeftRightValue = 0;
-        RaceTrackPath raceTrackPath = FindObjectOfType<RaceTrackPath>();
-        Paths = raceTrackPath.Paths;
+        lastLeftRightValue = currrentLeftRightValue;
+        moveSpeed = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(reachFinalPos)
+            return;
         if (Input.GetMouseButtonDown(0))
         {
+            isHoldingInput = true;
             lastInputTouchX = Input.mousePosition.x;
+            lastLeftRightValue = currrentLeftRightValue;
         }
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonUp(0))
         {
-            MoveAlongPath();
-            MoveLeftRight();
+            isHoldingInput = false;
         }
+        if (isHoldingInput)
+        {
+            moveSpeed += Accel * Time.deltaTime;
+        }
+        else
+        {
+            moveSpeed -= Accel/2 * Time.deltaTime;
+        }
+
+        moveSpeed = Mathf.Clamp(moveSpeed, 0, MaxSpeed);
+        MoveAlongPath();
+        MoveLeftRight();
     }
 
     void MoveLeftRight()
     {
         currentInputTouchX = Input.mousePosition.x;
         float offSet = currentInputTouchX - lastInputTouchX;
-        currrentLeftRightValue = Mathf.Clamp(currrentLeftRightValue+offSet/Screen.width, -1, 1);
-        PlayerMoveLeftRight.localPosition = Vector3.Lerp(MaxLeft.position, MaxRight.position,Remap(currrentLeftRightValue,-1,1,0,1));
+        offSet *= LeftRightSpeed;
+        currrentLeftRightValue = Mathf.Clamp(lastLeftRightValue+offSet/Screen.width, -1, 1);
+        PlayerMoveLeftRight.localPosition = new Vector3(Mathf.Lerp(MaxLeft.localPosition.x, MaxRight.localPosition.x,Remap(currrentLeftRightValue,-1,1,0,1))
+            ,PlayerMoveLeftRight.localPosition.y,PlayerMoveLeftRight.localPosition.z);
+        
+        // lastInputTouchX = Input.mousePosition.x;
     }
     void MoveAlongPath()
     {
-        if (Paths.Count == 0) return;  // No waypoints set
-
-        // Get the target waypoint
-        Transform targetWaypoint = Paths[currentWaypointIndex];
-
-        // Calculate the direction to the next waypoint
-        Vector3 direction = (targetWaypoint.position - transform.position).normalized;
-
-        // Calculate the distance to move this frame
-        float step = moveSpeed * Time.deltaTime;
-
-        // Move the player towards the waypoint
-        transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, step);
-        PlayerRotate.LookAt(targetWaypoint.position);
-        // Check if the player has reached the waypoint
-        if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
-        {
-            // Move to the next waypoint
-            currentWaypointIndex++;
-            if (currentWaypointIndex >= Paths.Count)
-            {
-                OnFinalPoint();
-            }
-        }
+        if (Paths.Count == 0) return; 
+        
+        distanceTravelled += moveSpeed * Time.deltaTime;
+        
+        transform.position = Paths[pathIndex].path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
+        PlayerRotate.rotation = Paths[pathIndex].path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
     }
 
     private void OnFinalPoint()
     {
-        
+        reachFinalPos = true;
     }
     private float Remap (float value, float from1, float to1, float from2, float to2) {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;

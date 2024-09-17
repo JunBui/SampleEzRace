@@ -1,5 +1,14 @@
 {
   "dependencies": {
+    "com.hadh.modules": {
+      "version": "ssh://git@gitlab.com/DoHaiHa/unity_common_modules_200.git#master",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "hash": "c14b24a963f9ccb0c090c22b784633ce404503f6"
+    },
     "com.unity.burst": {
       "version": "1.8.14",
       "depth": 1,
@@ -51,6 +60,13 @@
     },
     "com.unity.mathematics": {
       "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
