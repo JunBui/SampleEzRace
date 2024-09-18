@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     public Animator SkateAnim;
 
     public PlayerMovement PlayerMovement;
+
+    public float currentInput;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +19,27 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        SkinAnim.SetFloat("AngleDelta",PlayerMovement.Remap(PlayerMovement.XoffSet/Screen.width,0,1,-1,1));
-        // SkinAnim.SetFloat("AngleDelta",Input.GetAxis("Mouse X")*3);
+        if (Input.GetMouseButton(0))
+        {
+            if (Input.GetAxis("Mouse X") > .1f)
+            {
+                currentInput = Mathf.MoveTowards(currentInput, 1, 7 * Time.deltaTime);
+            }
+            else if (Input.GetAxis("Mouse X") < -.1f)
+            {
+                
+                currentInput = Mathf.MoveTowards(currentInput, -1, 7 * Time.deltaTime);
+            }
+            else
+            {
+                currentInput = Mathf.MoveTowards(currentInput, 0, 4 * Time.deltaTime);
+            }
+        }
+        else
+        {
+            currentInput = Mathf.MoveTowards(currentInput, 0, 7 * Time.deltaTime);
+        }
+        SkinAnim.SetFloat("AngleDelta",currentInput);
         SkinAnim.SetFloat("DriftX",PlayerMovement.XDriftPath);
         SkinAnim.SetFloat("DriftZ",PlayerMovement.currentMoveSpeed/PlayerMovement.MaxSpeed);
         SkinAnim.SetBool("IsBoardStart", PlayerMovement.StartGainSpeed);

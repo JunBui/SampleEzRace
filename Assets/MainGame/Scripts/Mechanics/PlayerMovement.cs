@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public List<PathCreator> Paths;
     public EndOfPathInstruction endOfPathInstruction;
     public float LeftRightSpeed = 2f;    
+    public float LeftRightAccel = 2f;    
     public float MaxSpeed = 5f;    
     public float currentMoveSpeed = 5f; 
     public float Accel = 5f;   
@@ -24,8 +25,9 @@ public class PlayerMovement : MonoBehaviour
     public Transform MaxLeft;
     public Transform MaxRight;
     public bool reachFinalPos;
-    private float currrentLeftRightValue;
-    private float lastLeftRightValue;
+    public float currrentLeftRightValue;
+    private float startLeftRightValue;
+    public float lastLeftRightValue;
     private float lastInputTouchX;
     private float currentInputTouchX;
     private bool isHoldingInput;
@@ -35,7 +37,8 @@ public class PlayerMovement : MonoBehaviour
     public bool StartGainSpeed;
     public float XoffSet;
     public float XDriftPath;
-    
+
+    private float startGainSpeedValue;
     // Start is called before the first frame update
     void Start()
     {
@@ -47,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
         reachFinalPos = false;
         isHoldingInput = false;
         currrentLeftRightValue = 0;
-        lastLeftRightValue = currrentLeftRightValue;
+        startLeftRightValue = currrentLeftRightValue;
         currentMoveSpeed = 0;
         RaceTrackPath raceTrackPath = FindObjectOfType<RaceTrackPath>();
         if (raceTrackPath != null)
@@ -61,10 +64,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         if (Input.GetMouseButtonDown(0))
         {
+            startGainSpeedValue = currentMoveSpeed;
             StartGainSpeed = true;
             isHoldingInput = true;
             lastInputTouchX = Input.mousePosition.x;
-            lastLeftRightValue = currrentLeftRightValue;
+            startLeftRightValue = currrentLeftRightValue;
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -84,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentMoveSpeed > 0)
         {
-            if (currentMoveSpeed >= MaxSpeed/3)
+            if (startGainSpeedValue+MaxSpeed/3<= currentMoveSpeed || currentMoveSpeed>= MaxSpeed*3/4)
                 StartGainSpeed = false;
             IsMoving = true;
         }
@@ -101,11 +105,9 @@ public class PlayerMovement : MonoBehaviour
         currentInputTouchX = Input.mousePosition.x;
         XoffSet = currentInputTouchX - lastInputTouchX;
         XoffSet *= LeftRightSpeed;
-        currrentLeftRightValue = Mathf.Clamp(lastLeftRightValue+XoffSet/Screen.width, -1, 1);
+        currrentLeftRightValue = Mathf.Clamp(Mathf.MoveTowards(currrentLeftRightValue,startLeftRightValue+XoffSet/Screen.width,LeftRightAccel*Time.deltaTime), -1, 1);
         PlayerMoveLeftRight.localPosition = new Vector3(Mathf.Lerp(MaxLeft.localPosition.x, MaxRight.localPosition.x,Remap(currrentLeftRightValue,-1,1,0,1))
             ,PlayerMoveLeftRight.localPosition.y,PlayerMoveLeftRight.localPosition.z);
-        
-        // lastInputTouchX = Input.mousePosition.x;
     }
     void MoveAlongPath()
     {
