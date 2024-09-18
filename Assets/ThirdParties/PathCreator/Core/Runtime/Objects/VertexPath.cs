@@ -174,6 +174,10 @@ namespace PathCreation {
             return MathUtility.TransformPoint (localPoints[index], transform, space);
         }
 
+        public bool ReachFinal(float dst)
+        {
+            return dst >= length;
+        }
         /// Gets point on path based on distance travelled.
         public Vector3 GetPointAtDistance (float dst, EndOfPathInstruction endOfPathInstruction = EndOfPathInstruction.Loop) {
             float t = dst / length;
