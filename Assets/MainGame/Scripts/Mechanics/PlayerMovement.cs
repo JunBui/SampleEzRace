@@ -31,7 +31,10 @@ public class PlayerMovement : MonoBehaviour
     private bool isHoldingInput;
     float distanceTravelled;
     private int pathIndex;
-    private bool IsMoving;
+    public bool IsMoving;
+    public bool StartGainSpeed;
+    public float XoffSet;
+    public float XDriftPath;
     
     // Start is called before the first frame update
     void Start()
@@ -58,12 +61,14 @@ public class PlayerMovement : MonoBehaviour
             return;
         if (Input.GetMouseButtonDown(0))
         {
+            StartGainSpeed = true;
             isHoldingInput = true;
             lastInputTouchX = Input.mousePosition.x;
             lastLeftRightValue = currrentLeftRightValue;
         }
         if (Input.GetMouseButtonUp(0))
         {
+            StartGainSpeed = false;
             isHoldingInput = false;
         }
         if (isHoldingInput)
@@ -79,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentMoveSpeed > 0)
         {
+            if (currentMoveSpeed >= MaxSpeed/3)
+                StartGainSpeed = false;
             IsMoving = true;
         }
         else
@@ -92,9 +99,9 @@ public class PlayerMovement : MonoBehaviour
     void MoveLeftRight()
     {
         currentInputTouchX = Input.mousePosition.x;
-        float offSet = currentInputTouchX - lastInputTouchX;
-        offSet *= LeftRightSpeed;
-        currrentLeftRightValue = Mathf.Clamp(lastLeftRightValue+offSet/Screen.width, -1, 1);
+        XoffSet = currentInputTouchX - lastInputTouchX;
+        XoffSet *= LeftRightSpeed;
+        currrentLeftRightValue = Mathf.Clamp(lastLeftRightValue+XoffSet/Screen.width, -1, 1);
         PlayerMoveLeftRight.localPosition = new Vector3(Mathf.Lerp(MaxLeft.localPosition.x, MaxRight.localPosition.x,Remap(currrentLeftRightValue,-1,1,0,1))
             ,PlayerMoveLeftRight.localPosition.y,PlayerMoveLeftRight.localPosition.z);
         
@@ -142,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
             PlayerGroundState = PlayerGroundState.OnGround;
         })).SetEase(Ease.Linear);
     }
-    private float Remap (float value, float from1, float to1, float from2, float to2) {
+    public float Remap (float value, float from1, float to1, float from2, float to2) {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
 }
