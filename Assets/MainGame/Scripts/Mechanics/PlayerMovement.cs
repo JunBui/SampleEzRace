@@ -134,9 +134,9 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerGroundState = PlayerGroundState.Flying;
         Vector3 beginOfNextPath = Paths[pathIndex].path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
-        PlayerRotate.DORotateQuaternion(Paths[pathIndex].path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction),1).SetEase(Ease.Linear);
+        PlayerRotate.DORotateQuaternion(Paths[pathIndex].path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction),.5f).SetEase(Ease.Linear);
         
-        transform.DOMove(beginOfNextPath, 1).OnComplete((() =>
+        transform.DOMove(beginOfNextPath, .5f).OnComplete((() =>
         {
             PlayerGroundState = PlayerGroundState.OnGround;
         })).SetEase(Ease.Linear);
