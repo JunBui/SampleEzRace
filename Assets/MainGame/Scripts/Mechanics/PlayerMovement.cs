@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using PathCreation;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public EndOfPathInstruction endOfPathInstruction;
     public float LeftRightSpeed = 2f;    
     public float MaxSpeed = 5f;    
-    private float moveSpeed = 5f; 
+    public float currentMoveSpeed = 5f; 
     public float Accel = 5f;   
 
     public Transform PlayerRotate;
@@ -44,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         isHoldingInput = false;
         currrentLeftRightValue = 0;
         lastLeftRightValue = currrentLeftRightValue;
-        moveSpeed = 0;
+        currentMoveSpeed = 0;
         RaceTrackPath raceTrackPath = FindObjectOfType<RaceTrackPath>();
         if (raceTrackPath != null)
             Paths = raceTrackPath.Paths;
@@ -67,16 +68,16 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isHoldingInput)
         {
-            moveSpeed += Accel * Time.deltaTime;
+            currentMoveSpeed += Accel * Time.deltaTime;
         }
         else
         {
-            moveSpeed -= Accel/2 * Time.deltaTime;
+            currentMoveSpeed -= Accel/2 * Time.deltaTime;
         }
 
-        moveSpeed = Mathf.Clamp(moveSpeed, 0, MaxSpeed);
+        currentMoveSpeed = Mathf.Clamp(currentMoveSpeed, 0, MaxSpeed);
 
-        if (moveSpeed > 0)
+        if (currentMoveSpeed > 0)
         {
             IsMoving = true;
         }
@@ -103,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Paths.Count == 0 || PlayerGroundState == PlayerGroundState.Flying) return; 
         
-        distanceTravelled += moveSpeed * Time.deltaTime;
+        distanceTravelled += currentMoveSpeed * Time.deltaTime;
         
         transform.position = Paths[pathIndex].path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
         PlayerRotate.rotation = Paths[pathIndex].path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
@@ -134,9 +135,9 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerGroundState = PlayerGroundState.Flying;
         Vector3 beginOfNextPath = Paths[pathIndex].path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
-        PlayerRotate.DORotateQuaternion(Paths[pathIndex].path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction),.5f).SetEase(Ease.Linear);
+        PlayerRotate.DORotateQuaternion(Paths[pathIndex].path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction),.85f).SetEase(Ease.Linear);
         
-        transform.DOMove(beginOfNextPath, .5f).OnComplete((() =>
+        transform.DOMove(beginOfNextPath, .85f).OnComplete((() =>
         {
             PlayerGroundState = PlayerGroundState.OnGround;
         })).SetEase(Ease.Linear);
