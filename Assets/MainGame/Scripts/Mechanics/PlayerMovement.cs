@@ -8,7 +8,6 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public Rigidbody Rb;
     public PlayerGroundState PlayerGroundState;
     public PlayerMovementState PlayerMovementState;
     public RaceTrack RaceTrack;
@@ -25,18 +24,25 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform MaxLeft;
     public Transform MaxRight;
+    [HideInInspector]
     public bool reachFinalPos;
+    [HideInInspector]
     public float currrentLeftRightValue;
     private float startLeftRightValue;
+    [HideInInspector]
     public float lastLeftRightValue;
     private float lastInputTouchX;
     private float currentInputTouchX;
     private bool isHoldingInput;
-    int distanceTravelled;
+    private int distanceTravelled;
     private int pathIndex;
+    [HideInInspector]
     public bool IsMoving;
+    [HideInInspector]
     public bool StartGainSpeed;
+    [HideInInspector]
     public float XoffSet;
+    [HideInInspector]
     public float XDriftPath;
 
     private float startGainSpeedValue;
@@ -113,14 +119,16 @@ public class PlayerMovement : MonoBehaviour
         if (RaceTrack.Tracks.Count == 0 || PlayerGroundState == PlayerGroundState.Flying) return;
 
         Vector3 nextPoint = RaceTrack.Tracks[pathIndex].Paths[distanceTravelled];
-        Vector3 direction = nextPoint - Rb.position;
+        Vector3 direction = nextPoint - transform.position;
         direction.Normalize();
         direction.y = 0;
-        Rb.velocity = direction;
-        Vector3 firstCloseDis = Rb.position;
+        transform.position = Vector3.MoveTowards(transform.position,nextPoint,currentMoveSpeed*Time.deltaTime);
+        Vector3 firstCloseDis = transform.position;
         firstCloseDis.y = 0;
         Vector3 secondCloseDis = nextPoint;
         secondCloseDis.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, 15 * Time.fixedDeltaTime);
         if (Vector3.Distance(firstCloseDis, secondCloseDis) < 0.1f)
         {
             distanceTravelled += 1;
