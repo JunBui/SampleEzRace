@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Modules.DesignPatterns.Singleton;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SingletonMono<GameManager>
 {
@@ -24,6 +25,10 @@ public class GameManager : SingletonMono<GameManager>
         if (GameState == GameState.Running)
         {
             speedEffectParticles.emissionRate = (PlayerMovement.currentMoveSpeed*3);
+            if (MenuMainGame.Instance != null)
+            {
+                MenuMainGame.Instance.SetSpeedUi(PlayerMovement.currentMoveSpeed,PlayerMovement.MaxSpeed);
+            }
         }
     }
 
@@ -31,8 +36,14 @@ public class GameManager : SingletonMono<GameManager>
     {
         if (GameState == GameState.HomePreview)
         {
+            MenuMainGame.Show();
             GameState = GameState.Running;
         }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void WinGame()

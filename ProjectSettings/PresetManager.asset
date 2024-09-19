@@ -4,4 +4,25 @@
 PresetManager:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_DefaultPresets: {}
+  m_DefaultPresets:
+  - first:
+      m_NativeTypeID: 1006
+      m_ManagedTypePPtr: {fileID: 0}
+      m_ManagedTypeFallback: 
+    second:
+    - m_Preset: {fileID: 2655988077585873504, guid: 8daa0c93b1abc544792401ae6cd2f34b,
+        type: 2}
+      m_Filter: glob:"*/[Ss]prites/**"
+      m_Disabled: 0
+    - m_Preset: {fileID: 2655988077585873504, guid: f9ed4e5f4ef79e847b80111e60cc69c4,
+        type: 2}
+      m_Filter: glob:"*/[Tt]extures/**"
+      m_Disabled: 0
+    - m_Preset: {fileID: 2655988077585873504, guid: f9ed4e5f4ef79e847b80111e60cc69c4,
+        type: 2}
+      m_Filter: glob:"*/[Mm]odels/**"
+      m_Disabled: 0
+    - m_Preset: {fileID: 2655988077585873504, guid: f9ed4e5f4ef79e847b80111e60cc69c4,
+        type: 2}
+      m_Filter: glob:"*/[Tt]exture2D/**"
+      m_Disabled: 0
