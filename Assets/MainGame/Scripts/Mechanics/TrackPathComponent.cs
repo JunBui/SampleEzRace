@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class TrackPathComponent : MonoBehaviour
 {
-    
+    public bool FlyingPath;
     //Racetrack -> trackpath component -> Path
     public PathCreator PathCreator;
 

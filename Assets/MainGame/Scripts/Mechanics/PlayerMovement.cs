@@ -18,8 +18,6 @@ public class PlayerMovement : MonoBehaviour
     public float currentMoveSpeed = 5f; 
     public float Accel = 5f;   
 
-    public Transform PlayerRotate;
-
     public Transform PlayerMoveLeftRight;
 
     public Transform MaxLeft;
@@ -121,7 +119,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 nextPoint = RaceTrack.Tracks[pathIndex].Paths[distanceTravelled];
         Vector3 direction = nextPoint - transform.position;
         direction.Normalize();
-        direction.y = 0;
         transform.position = Vector3.MoveTowards(transform.position,nextPoint,currentMoveSpeed*Time.deltaTime);
         Vector3 firstCloseDis = transform.position;
         firstCloseDis.y = 0;
@@ -129,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
         secondCloseDis.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, 15 * Time.fixedDeltaTime);
+        transform.rotation = newRotation;
         if (Vector3.Distance(firstCloseDis, secondCloseDis) < 0.1f)
         {
             distanceTravelled += 1;
@@ -148,7 +146,8 @@ public class PlayerMovement : MonoBehaviour
             OnFinalPointOfFinalPath();
         else
         {
-            Fly();
+            if(RaceTrack.Tracks[pathIndex].FlyingPath)
+                Fly();
         }
         
     }
@@ -162,8 +161,6 @@ public class PlayerMovement : MonoBehaviour
     {
         PlayerGroundState = PlayerGroundState.Flying;
         Vector3 beginOfNextPath = RaceTrack.Tracks[pathIndex].Paths[0];
-        PlayerRotate.DOLookAt(beginOfNextPath,.85f).SetEase(Ease.Linear);
-        
         transform.DOMove(beginOfNextPath, .85f).OnComplete((() =>
         {
             PlayerGroundState = PlayerGroundState.OnGround;
