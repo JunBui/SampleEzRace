@@ -8,9 +8,10 @@ using UnityEngine.Serialization;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Rigidbody Rb;
     public PlayerGroundState PlayerGroundState;
     public PlayerMovementState PlayerMovementState;
-    public List<PathCreator> Paths;
+    public RaceTrack RaceTrack;
     public EndOfPathInstruction endOfPathInstruction;
     public float LeftRightSpeed = 2f;    
     public float LeftRightAccel = 2f;    
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastInputTouchX;
     private float currentInputTouchX;
     private bool isHoldingInput;
-    float distanceTravelled;
+    int distanceTravelled;
     private int pathIndex;
     public bool IsMoving;
     public bool StartGainSpeed;
@@ -52,9 +53,7 @@ public class PlayerMovement : MonoBehaviour
         currrentLeftRightValue = 0;
         startLeftRightValue = currrentLeftRightValue;
         currentMoveSpeed = 0;
-        RaceTrackPath raceTrackPath = FindObjectOfType<RaceTrackPath>();
-        if (raceTrackPath != null)
-            Paths = raceTrackPath.Paths;
+        RaceTrack raceTrack = FindObjectOfType<RaceTrack>();
     }
 
     // Update is called once per frame
@@ -111,28 +110,39 @@ public class PlayerMovement : MonoBehaviour
     }
     void MoveAlongPath()
     {
-        if (Paths.Count == 0 || PlayerGroundState == PlayerGroundState.Flying) return; 
-        
-        distanceTravelled += currentMoveSpeed * Time.deltaTime;
-        
-        transform.position = Paths[pathIndex].path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
-        PlayerRotate.rotation = Paths[pathIndex].path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction);
-        if (Paths[pathIndex].path.ReachFinal(distanceTravelled))
+        if (RaceTrack.Tracks.Count == 0 || PlayerGroundState == PlayerGroundState.Flying) return;
+
+        Vector3 nextPoint = RaceTrack.Tracks[pathIndex].Paths[distanceTravelled];
+        Vector3 direction = nextPoint - Rb.position;
+        direction.Normalize();
+        direction.y = 0;
+        Rb.velocity = direction;
+        Vector3 firstCloseDis = Rb.position;
+        firstCloseDis.y = 0;
+        Vector3 secondCloseDis = nextPoint;
+        secondCloseDis.y = 0;
+        if (Vector3.Distance(firstCloseDis, secondCloseDis) < 0.1f)
         {
-            OnFinalPointOfCurrentPath();
+            distanceTravelled += 1;
+            if (distanceTravelled>= RaceTrack.Tracks[pathIndex].Paths.Count)
+            {
+                OnFinalPointOfCurrentPath();
+            }
         }
+        //move to point
     }
 
     private void OnFinalPointOfCurrentPath()
     {
         pathIndex++;
-        distanceTravelled = 0.02f;
-        if(pathIndex>=Paths.Count)
+        distanceTravelled = 0;
+        if(pathIndex>=RaceTrack.Tracks.Count)
             OnFinalPointOfFinalPath();
         else
         {
             Fly();
         }
+        
     }
 
     private void OnFinalPointOfFinalPath()
@@ -143,8 +153,8 @@ public class PlayerMovement : MonoBehaviour
     public void Fly()
     {
         PlayerGroundState = PlayerGroundState.Flying;
-        Vector3 beginOfNextPath = Paths[pathIndex].path.GetPointAtDistance(distanceTravelled, endOfPathInstruction);
-        PlayerRotate.DORotateQuaternion(Paths[pathIndex].path.GetRotationAtDistance(distanceTravelled, endOfPathInstruction),.85f).SetEase(Ease.Linear);
+        Vector3 beginOfNextPath = RaceTrack.Tracks[pathIndex].Paths[0];
+        PlayerRotate.DOLookAt(beginOfNextPath,.85f).SetEase(Ease.Linear);
         
         transform.DOMove(beginOfNextPath, .85f).OnComplete((() =>
         {

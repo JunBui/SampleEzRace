@@ -1,0 +1,358 @@
+fileFormatVersion: 2
+guid: 8fcb943d435074240a6a280c9705245f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: confetti_large_0
+  - first:
+      213: 21300002
+    second: confetti_large_1
+  - first:
+      213: 21300004
+    second: confetti_large_2
+  - first:
+      213: 21300006
+    second: confetti_large_3
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 47
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 0
+  flipbookColumns: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  cookieLightType: 1
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: confetti_large_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -64, y: -64}
+        - {x: -64, y: 64}
+        - {x: 64, y: 64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: 51, y: 24}
+        - {x: 45, y: 24}
+        - {x: 39.999996, y: 19.999998}
+        - {x: 36, y: 17}
+        - {x: 35, y: 29.999998}
+        - {x: 29, y: 35}
+        - {x: 11, y: 35}
+        - {x: 4.9999995, y: 31}
+        - {x: 0, y: 16}
+        - {x: -4, y: 31}
+        - {x: -6, y: 35}
+        - {x: -26, y: 35}
+        - {x: -31, y: 26.999998}
+        - {x: -39.999996, y: 33}
+        - {x: -56, y: 35}
+        - {x: -58, y: 35}
+        - {x: -64, y: 34}
+        - {x: -64, y: 28}
+        - {x: -45.999996, y: -9.999999}
+        - {x: -42, y: -14.999999}
+        - {x: -32, y: -18}
+        - {x: -9.999999, y: -24}
+        - {x: 6, y: -26.999998}
+        - {x: 12, y: -22}
+        - {x: 14, y: -17}
+        - {x: 16, y: -22.999998}
+        - {x: 21, y: -32}
+        - {x: 28, y: -35}
+        - {x: 44, y: -35}
+        - {x: 53.999996, y: -18}
+        - {x: 64, y: 9}
+        - {x: 64, y: 17}
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd26ce84a8514e0e9d8a5f5c5bc9265a
+      internalID: 21300000
+      vertices:
+      - {x: 0, y: 128}
+      - {x: 128, y: 128}
+      - {x: 0, y: 0}
+      - {x: 128, y: 0}
+      indices: 000000000100000002000000020000000100000003000000
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: confetti_large_1
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -64, y: -64}
+        - {x: -64, y: 64}
+        - {x: 64, y: 64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: 22.999998, y: -25}
+        - {x: 33, y: -26}
+        - {x: 55, y: -26}
+        - {x: 64, y: -18}
+        - {x: 64, y: 1}
+        - {x: 57, y: 4}
+        - {x: 39.999996, y: -4.9999995}
+        - {x: 16, y: 24}
+        - {x: 2, y: 28}
+        - {x: -18, y: 18}
+        - {x: -36, y: 39.999996}
+        - {x: -48, y: 39.999996}
+        - {x: -62, y: 38}
+        - {x: -63, y: 35}
+        - {x: -63, y: 32}
+        - {x: -42.999996, y: 6}
+        - {x: -39, y: -6}
+        - {x: -22, y: -26}
+        - {x: -14, y: -26}
+        - {x: 1, y: -19}
+        - {x: 3, y: -13}
+        - {x: 4, y: -8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54cdbefc040145e4bceb91f1ac22e505
+      internalID: 21300002
+      vertices:
+      - {x: 0, y: 128}
+      - {x: 128, y: 128}
+      - {x: 0, y: 0}
+      - {x: 128, y: 0}
+      indices: 000000000100000002000000020000000100000003000000
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: confetti_large_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -64, y: -64}
+        - {x: -64, y: 64}
+        - {x: 64, y: 64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: 63, y: 24}
+        - {x: 62, y: 26.999998}
+        - {x: 47, y: 26.999998}
+        - {x: 6, y: 19}
+        - {x: -22.999998, y: 18}
+        - {x: -35, y: 8}
+        - {x: -42, y: 14.999999}
+        - {x: -63, y: 17}
+        - {x: -64, y: 16}
+        - {x: -64, y: 9.999999}
+        - {x: -47, y: -12}
+        - {x: -48.999996, y: -31}
+        - {x: -35, y: -35}
+        - {x: -19, y: -33}
+        - {x: -17, y: -28}
+        - {x: -14.999999, y: -4.9999995}
+        - {x: -6, y: 3}
+        - {x: 3, y: -12}
+        - {x: 4, y: -33}
+        - {x: 8, y: -36}
+        - {x: 31, y: -36}
+        - {x: 34, y: -33}
+        - {x: 39.999996, y: -3}
+        - {x: 47, y: 9.999999}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c242f47c531a41b198e6d1cd4e2cd210
+      internalID: 21300004
+      vertices:
+      - {x: 0, y: 128}
+      - {x: 128, y: 128}
+      - {x: 0, y: 0}
+      - {x: 128, y: 0}
+      indices: 000000000100000002000000020000000100000003000000
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: confetti_large_3
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -64, y: -64}
+        - {x: -64, y: 64}
+        - {x: 64, y: 64}
+        - {x: 64, y: -64}
+      physicsShape:
+      - - {x: 59.999996, y: -21}
+        - {x: 45.999996, y: -18}
+        - {x: 36, y: 6}
+        - {x: 25, y: 28}
+        - {x: 19, y: 33}
+        - {x: -2, y: 34}
+        - {x: -6, y: 34}
+        - {x: -12, y: 25}
+        - {x: -14.999999, y: 8}
+        - {x: -21, y: 29.999998}
+        - {x: -22.999998, y: 34}
+        - {x: -45.999996, y: 34}
+        - {x: -53.999996, y: 32}
+        - {x: -62, y: -4.9999995}
+        - {x: -63, y: -9}
+        - {x: -63, y: -24}
+        - {x: -53.999996, y: -21}
+        - {x: -22, y: -28}
+        - {x: -4, y: -33}
+        - {x: 6, y: -3}
+        - {x: 21, y: -26.999998}
+        - {x: 29, y: -33}
+        - {x: 48.999996, y: -33}
+        - {x: 61, y: -25}
+        - {x: 61, y: -22.999998}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1fc1f4bb31a4a21bc0373efb361ad98
+      internalID: 21300006
+      vertices:
+      - {x: 0, y: 128}
+      - {x: 128, y: 128}
+      - {x: 0, y: 0}
+      - {x: 128, y: 0}
+      indices: 000000000100000002000000020000000100000003000000
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      confetti_large_0: 21300000
+      confetti_large_1: 21300002
+      confetti_large_2: 21300004
+      confetti_large_3: 21300006
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
