@@ -17,11 +17,6 @@ public class PlayerMovement : MonoBehaviour
     public float MaxSpeed = 5f;    
     public float currentMoveSpeed = 5f; 
     public float Accel = 5f;   
-
-    public Transform PlayerMoveLeftRight;
-
-    public Transform MaxLeft;
-    public Transform MaxRight;
     [HideInInspector]
     public bool reachFinalPos;
     [HideInInspector]
@@ -44,6 +39,18 @@ public class PlayerMovement : MonoBehaviour
     public float XDriftPath;
 
     private float startGainSpeedValue;
+    
+    [Header("Left Right")]
+
+    public Transform PlayerMoveLeftRight;
+    public Transform PlayerRotateLeftRight;
+    public Transform MaxLeft;
+    public Transform MaxRight;
+
+    public float MaxRotateLeftRight = 10f;
+
+    [HideInInspector]
+    public float CurrentInputLeftRight;
     // Start is called before the first frame update
     void Start()
     {
@@ -112,6 +119,16 @@ public class PlayerMovement : MonoBehaviour
         currrentLeftRightValue = Mathf.MoveTowards(currrentLeftRightValue,targetLeftRightValue,LeftRightAccel*Time.deltaTime);
         PlayerMoveLeftRight.localPosition = new Vector3(Mathf.Lerp(MaxLeft.localPosition.x, MaxRight.localPosition.x,Remap(currrentLeftRightValue,-1,1,0,1))
             ,PlayerMoveLeftRight.localPosition.y,PlayerMoveLeftRight.localPosition.z);
+        CurrentInputLeftRight =  (targetLeftRightValue - currrentLeftRightValue);
+        if (Mathf.Abs(currrentLeftRightValue -targetLeftRightValue) >= .01f)
+        {
+            CurrentInputLeftRight = targetLeftRightValue - currrentLeftRightValue;
+        }
+        else
+        {
+            CurrentInputLeftRight = Mathf.MoveTowards(CurrentInputLeftRight, 0, 4 * Time.deltaTime);
+        }
+        PlayerRotateLeftRight.localRotation = Quaternion.Euler(0,Remap(CurrentInputLeftRight/1.3f,-1,1,-MaxRotateLeftRight,MaxRotateLeftRight),0);
     }
     void MoveAlongPath()
     {
