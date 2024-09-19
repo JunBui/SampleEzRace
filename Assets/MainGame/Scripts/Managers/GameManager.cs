@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Modules.DesignPatterns.EventManager;
@@ -13,6 +14,12 @@ public class GameManager : SingletonMono<GameManager>
     public GameState GameState = GameState.HomePreview;
 
     public PlayerMovement PlayerMovement;
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 60;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +30,11 @@ public class GameManager : SingletonMono<GameManager>
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0) && GameState == GameState.HomePreview)
+        {
+            StartGame();
+            MenuHome.Hide();
+        }
         if (GameState == GameState.Running)
         {
             speedEffectParticles.emissionRate = (PlayerMovement.currentMoveSpeed*3);
