@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public float currrentLeftRightValue;
     private float startLeftRightValue;
     [HideInInspector]
-    public float lastLeftRightValue;
+    public float targetLeftRightValue;
     private float lastInputTouchX;
     private float currentInputTouchX;
     private bool isHoldingInput;
@@ -108,7 +108,8 @@ public class PlayerMovement : MonoBehaviour
         currentInputTouchX = Input.mousePosition.x;
         XoffSet = currentInputTouchX - lastInputTouchX;
         XoffSet *= LeftRightSpeed;
-        currrentLeftRightValue = Mathf.Clamp(Mathf.MoveTowards(currrentLeftRightValue,startLeftRightValue+XoffSet/Screen.width,LeftRightAccel*Time.deltaTime), -1, 1);
+        targetLeftRightValue = Mathf.Clamp(startLeftRightValue + XoffSet / Screen.width, -1, 1);
+        currrentLeftRightValue = Mathf.MoveTowards(currrentLeftRightValue,targetLeftRightValue,LeftRightAccel*Time.deltaTime);
         PlayerMoveLeftRight.localPosition = new Vector3(Mathf.Lerp(MaxLeft.localPosition.x, MaxRight.localPosition.x,Remap(currrentLeftRightValue,-1,1,0,1))
             ,PlayerMoveLeftRight.localPosition.y,PlayerMoveLeftRight.localPosition.z);
     }
@@ -124,9 +125,12 @@ public class PlayerMovement : MonoBehaviour
         firstCloseDis.y = 0;
         Vector3 secondCloseDis = nextPoint;
         secondCloseDis.y = 0;
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-        Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, 15 * Time.fixedDeltaTime);
-        transform.rotation = newRotation;
+        if (direction != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, 45 * Time.fixedDeltaTime);
+            transform.rotation = newRotation;
+        }
         if (Vector3.Distance(firstCloseDis, secondCloseDis) < 0.1f)
         {
             distanceTravelled += 1;

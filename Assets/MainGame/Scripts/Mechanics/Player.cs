@@ -19,25 +19,13 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Mathf.Abs(PlayerMovement.currrentLeftRightValue - PlayerMovement.targetLeftRightValue) >= .01f)
         {
-            if (Input.GetAxis("Mouse X") > .1f)
-            {
-                currentInput = Mathf.MoveTowards(currentInput, 1, 7 * Time.deltaTime);
-            }
-            else if (Input.GetAxis("Mouse X") < -.1f)
-            {
-                
-                currentInput = Mathf.MoveTowards(currentInput, -1, 7 * Time.deltaTime);
-            }
-            else
-            {
-                currentInput = Mathf.MoveTowards(currentInput, 0, 4 * Time.deltaTime);
-            }
+            currentInput =  (PlayerMovement.targetLeftRightValue - PlayerMovement.currrentLeftRightValue)/1.3f;
         }
         else
         {
-            currentInput = Mathf.MoveTowards(currentInput, 0, 7 * Time.deltaTime);
+            currentInput = Mathf.MoveTowards(currentInput, 0, 4 * Time.deltaTime);
         }
         SkinAnim.SetFloat("AngleDelta",currentInput);
         SkinAnim.SetFloat("DriftX",PlayerMovement.XDriftPath);
