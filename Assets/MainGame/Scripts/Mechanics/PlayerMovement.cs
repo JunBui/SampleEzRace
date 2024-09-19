@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         IsMoving = false;
         Application.targetFrameRate = 60;
         pathIndex = 0;
-        distanceTravelled = 0;
+        distanceTravelled = 1;
         reachFinalPos = false;
         isHoldingInput = false;
         currrentLeftRightValue = 0;

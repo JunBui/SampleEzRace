@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DestroyWhenClosed: 1
   IsTopOverAll: 0
-  PlayButton: {fileID: 0}
+  PlayButton: {fileID: 1866677735174784240}
 --- !u!1 &1866677735087186066
 GameObject:
   m_ObjectHideFlags: 0

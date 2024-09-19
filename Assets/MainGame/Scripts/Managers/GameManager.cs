@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Modules.DesignPatterns.EventManager;
 using Modules.DesignPatterns.Singleton;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -38,6 +39,7 @@ public class GameManager : SingletonMono<GameManager>
         {
             MenuMainGame.Show();
             GameState = GameState.Running;
+            EventManager.Instance.TriggerEvent(new GameEvents.OnPlay());
         }
     }
 
