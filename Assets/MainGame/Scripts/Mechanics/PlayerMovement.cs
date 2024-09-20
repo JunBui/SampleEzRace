@@ -119,7 +119,6 @@ public class PlayerMovement : MonoBehaviour
         currrentLeftRightValue = Mathf.MoveTowards(currrentLeftRightValue,targetLeftRightValue,LeftRightAccel*Time.deltaTime);
         PlayerMoveLeftRight.localPosition = new Vector3(Mathf.Lerp(MaxLeft.localPosition.x, MaxRight.localPosition.x,Remap(currrentLeftRightValue,-1,1,0,1))
             ,PlayerMoveLeftRight.localPosition.y,PlayerMoveLeftRight.localPosition.z);
-        CurrentInputLeftRight =  (targetLeftRightValue - currrentLeftRightValue);
         if (Mathf.Abs(currrentLeftRightValue -targetLeftRightValue) >= .01f)
         {
             CurrentInputLeftRight = targetLeftRightValue - currrentLeftRightValue;

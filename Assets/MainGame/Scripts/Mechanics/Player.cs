@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        SkinAnim.SetFloat("AngleDelta",PlayerMovement.CurrentInputLeftRight);
+        SkinAnim.SetFloat("AngleDelta",PlayerMovement.CurrentInputLeftRight/2);
         SkinAnim.SetFloat("DriftX",PlayerMovement.XDriftPath);
         SkinAnim.SetFloat("DriftZ",PlayerMovement.currentMoveSpeed/PlayerMovement.MaxSpeed);
         SkinAnim.SetBool("IsBoardStart", PlayerMovement.StartGainSpeed);
