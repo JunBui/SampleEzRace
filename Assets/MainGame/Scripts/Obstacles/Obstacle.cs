@@ -7,7 +7,7 @@ public class Obstacle : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PlayerDetect"))
         {
             HitPlayer();
         }
@@ -15,6 +15,6 @@ public class Obstacle : MonoBehaviour
 
     public virtual void HitPlayer()
     {
-        
+        Debug.Log(this.gameObject.name + " --- hit player");
     }
 }

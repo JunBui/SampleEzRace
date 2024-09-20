@@ -5,9 +5,4 @@ using UnityEngine;
 
 public class RoadFinish : MonoBehaviour
 {
-    public TrackPathComponent PreviousTrack;
-    [EditorButton]
-    public void ToFinishPoint()
-    {
-    }
 }
