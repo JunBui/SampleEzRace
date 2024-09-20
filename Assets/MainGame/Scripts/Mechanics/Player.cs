@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     public Animator SkateAnim;
 
     public PlayerMovement PlayerMovement;
+
+    [Header("Vfx")]
+    public GameObject JumpVfx;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +26,6 @@ public class Player : MonoBehaviour
         SkinAnim.SetBool("IsBoardStart", PlayerMovement.StartGainSpeed);
         SkinAnim.SetBool("RotateJump", PlayerMovement.PlayerGroundState == PlayerGroundState.Flying);
         SkateAnim.SetBool("Rotate", PlayerMovement.PlayerGroundState == PlayerGroundState.Flying);
+        JumpVfx.SetActive(PlayerMovement.PlayerGroundState == PlayerGroundState.Flying);
     }
 }
