@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private float lastInputTouchX;
     private float currentInputTouchX;
     private bool isHoldingInput;
-    private int distanceTravelled;
+    private float distanceTravelled;
     private int pathIndex;
     [HideInInspector]
     public bool IsMoving;
@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         IsMoving = false;
         Application.targetFrameRate = 60;
         pathIndex = 0;
-        distanceTravelled = 1;
+        distanceTravelled = 0;
         reachFinalPos = false;
         isHoldingInput = false;
         currrentLeftRightValue = 0;
@@ -134,27 +134,19 @@ public class PlayerMovement : MonoBehaviour
     {
         if (RaceTrack.Tracks.Count == 0 || PlayerGroundState == PlayerGroundState.Flying) return;
 
-        Vector3 nextPoint = RaceTrack.Tracks[pathIndex].Paths[distanceTravelled];
-        Vector3 direction = nextPoint - transform.position;
+        distanceTravelled += currentMoveSpeed * Time.deltaTime;
+        Vector3 nextPoint = RaceTrack.Tracks[pathIndex].PathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
+        Quaternion rotation = RaceTrack.Tracks[pathIndex].PathCreator.path.GetRotationAtDistance(distanceTravelled, EndOfPathInstruction.Stop) * Quaternion.Euler(0,0,90);
+        Vector3 direction = RaceTrack.Tracks[pathIndex].PathCreator.path.GetDirection(distanceTravelled, EndOfPathInstruction.Stop);
         direction.Normalize();
         transform.position = Vector3.MoveTowards(transform.position,nextPoint,currentMoveSpeed*Time.deltaTime);
-        Vector3 firstCloseDis = transform.position;
-        firstCloseDis.y = 0;
-        Vector3 secondCloseDis = nextPoint;
-        secondCloseDis.y = 0;
-        if (direction != Vector3.zero)
+        
+        Quaternion newRotation = Quaternion.Slerp(transform.rotation, rotation, 25 * Time.fixedDeltaTime);
+        transform.rotation = newRotation;
+
+        if (RaceTrack.Tracks[pathIndex].PathCreator.path.ReachFinal(distanceTravelled))
         {
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            Quaternion newRotation = Quaternion.Slerp(transform.rotation, targetRotation, 45 * Time.fixedDeltaTime);
-            transform.rotation = newRotation;
-        }
-        if (Vector3.Distance(firstCloseDis, secondCloseDis) < 0.1f)
-        {
-            distanceTravelled += 1;
-            if (distanceTravelled>= RaceTrack.Tracks[pathIndex].Paths.Count)
-            {
-                OnFinalPointOfCurrentPath();
-            }
+            OnFinalPointOfCurrentPath();
         }
         //move to point
     }
@@ -181,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
     public void Fly()
     {
         PlayerGroundState = PlayerGroundState.Flying;
-        Vector3 beginOfNextPath = RaceTrack.Tracks[pathIndex].Paths[0];
+        Vector3 beginOfNextPath = RaceTrack.Tracks[pathIndex].PathCreator.path.GetPointAtDistance(distanceTravelled, EndOfPathInstruction.Stop);
         transform.DOMove(beginOfNextPath, .85f).OnComplete((() =>
         {
             PlayerGroundState = PlayerGroundState.OnGround;

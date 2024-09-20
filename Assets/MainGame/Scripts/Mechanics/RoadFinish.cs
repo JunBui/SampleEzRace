@@ -9,6 +9,5 @@ public class RoadFinish : MonoBehaviour
     [EditorButton]
     public void ToFinishPoint()
     {
-        this.transform.position = PreviousTrack.Paths[PreviousTrack.Paths.Count-1];
     }
 }
