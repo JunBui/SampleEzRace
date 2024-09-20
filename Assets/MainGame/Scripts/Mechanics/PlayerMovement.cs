@@ -178,6 +178,11 @@ public class PlayerMovement : MonoBehaviour
             PlayerGroundState = PlayerGroundState.OnGround;
         })).SetEase(Ease.Linear);
     }
+
+    public void PlayerGetHit(float hitForce)
+    {
+        currentMoveSpeed -= hitForce;
+    }
     public float Remap (float value, float from1, float to1, float from2, float to2) {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
